@@ -1,0 +1,21 @@
+.navegacion_solicitudes_proceso{
+    @apply mx-8 shadow-lg shadow-yellow-500/50 mb-8 mt-1 border rounded-full bg-white border-b-4  border-yellow-500 flex flex-auto justify-between
+ }
+
+ .dropdown-menu-user_solicitudes_proceso{
+    @apply bg-white shadow-lg rounded-lg px-32 py-5 shadow-yellow-500/50  border-yellow-500  ;
+    position: relative;
+ 
+
+  }
+  .dropdown-menu_solicitudes_proceso{
+
+    @apply bg-white shadow-lg rounded-lg   px-3  shadow-yellow-500/50  border-yellow-500  ;
+   position: relative;
+   float: left; /* Esto hace que el menú flote */
+   clear: both;
+ }
+
+.icon_desplazar_solicitudes_proceso{
+    @apply text-yellow-400 text-4xl hover:text-yellow-600 mx-6
+}

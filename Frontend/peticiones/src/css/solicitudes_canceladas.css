@@ -1,0 +1,21 @@
+.navegacion_solicitudes_canceladas{
+    @apply mx-8 shadow-lg shadow-red-500/50 mb-8 mt-1 border rounded-full bg-white border-b-4  border-red-500 flex flex-auto justify-between
+ }
+
+ .dropdown-menu-user_solicitudes_canceladas{
+    @apply bg-white shadow-lg rounded-lg px-32 py-5 shadow-red-500/50  border-red-500  ;
+    position: relative;
+ 
+
+  }
+  .dropdown-menu_solicitudes_canceladas{
+
+    @apply bg-white shadow-lg rounded-lg   px-3  shadow-red-500/50  border-red-500  ;
+   position: relative;
+   float: left; /* Esto hace que el menú flote */
+   clear: both;
+ }
+
+.icon_desplazar_solicitudes_canceladas{
+    @apply text-red-400 text-4xl hover:text-red-600 mx-6
+}
