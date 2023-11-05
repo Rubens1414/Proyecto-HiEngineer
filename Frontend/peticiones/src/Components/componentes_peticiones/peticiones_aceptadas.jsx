@@ -89,7 +89,7 @@ function Peticiones_aceptadas() {
   
     useEffect(() => {
       if (idusuario) {
-        axios.get(`/api/peticiones/obtener_solicitudes_aceptadas`).then(res => {
+        axios.get(`/api/peticiones/obtener_solicitudes_aceptadas/${idusuario}`).then(res => {
       
           setPeticiones(res.data);
         }).catch(err => console.log(err));

@@ -1,6 +1,9 @@
 .navegacion_solicitudes{
     @apply mx-8 shadow-lg shadow-blue-500/50 mb-8 mt-1 border rounded-full bg-white border-b-4  border-blue-500 flex flex-auto justify-between
  }
+ .navegacion_historial_solicitudes{
+  @apply mx-8 shadow-lg shadow-green-500/50 mb-8 mt-1 border rounded-full bg-white border-b-4  border-green-500 flex flex-auto justify-between
+}
  .boton_ir_inicio{
     @apply text-cyan-500 hover:text-white border border-cyan-500 hover:bg-cyan-500 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-cyan-500 dark:text-cyan-500 dark:hover:text-white dark:hover:bg-cyan-500 dark:focus:ring-cyan-800 mt-4 ml-4 mb-2
 }
@@ -36,7 +39,46 @@
     @apply  flex flex-row  justify-center items-center  mt-8 mb-8
  }
 
+.boton_select{
+  @apply cursor-pointer transition-all 
+  bg-green-400 text-white px-6 mx-2 mt-4 py-2 rounded-lg
+  border-green-400
+  border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
+  active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-green-300 shadow-green-300 active:shadow-none;
+  
+}
 
+.boton_select_proceso{
+  @apply cursor-pointer transition-all 
+  bg-orange-400 text-white px-6 mx-2 mt-4 py-2 rounded-lg
+  border-orange-400
+  border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
+  active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-orange-300 shadow-orange-300 active:shadow-none;
+  
+}
+.boton_select_pendiente{
+  @apply cursor-pointer transition-all 
+  bg-blue-400 text-white px-6 mx-2 mt-4 py-2 rounded-lg
+  border-blue-400
+  border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
+  active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-blue-300 shadow-blue-300 active:shadow-none;
+  
+}
+.boton_select_cancelado{
+  @apply cursor-pointer transition-all 
+  bg-red-400 text-white px-6 mx-2 mt-4 py-2 rounded-lg
+  border-red-400
+  border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
+  active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-red-300 shadow-red-300 active:shadow-none;
+  
+}
+.boton_select_falsa{
+  @apply cursor-pointer transition-all 
+  bg-gray-400 text-white px-6 mx-2 mt-4 py-2 rounded-lg
+  border-gray-400
+  border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
+  active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-gray-300 shadow-gray-300 active:shadow-none;
+}
  /* Ajuste de lista con cierta resolucion*/
 
  @media (max-width:801px)  { 

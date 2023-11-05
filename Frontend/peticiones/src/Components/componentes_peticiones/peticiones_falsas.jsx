@@ -86,7 +86,7 @@ function Peticiones_falsas() {
     };
     useEffect(() => {
       if (idusuario) {
-        axios.get(`/api/peticiones/obtener_solicitudes_falsas`).then(res => {
+        axios.get(`/api/peticiones/obtener_solicitudes_falsas/${idusuario}`).then(res => {
       
           setPeticiones(res.data);
         }).catch(err => console.log(err));

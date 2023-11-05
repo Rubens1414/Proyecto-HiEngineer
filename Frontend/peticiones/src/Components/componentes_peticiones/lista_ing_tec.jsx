@@ -40,7 +40,7 @@ function ListaIngTec({ Admin, onSelect }) {
     <div style={{ textAlign: 'center' }}>
       <button
         onClick={() => handleSelect(Admin.idusuario)}
-        className={` text-black border border-sky-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group m-4 ${
+        className={` text-black border border-sky-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group m-2 ${
           isSelected ? ' text-green-400  border-green-400  ' : 'bg-white'
         }`}
       >

@@ -135,6 +135,20 @@ router.get('/Obtener_Admins', (req, res) => {
     });
 });
 
+//buscar usario admin por id
+
+router.get('/Obtener_Admin/:idusuario', (req, res) => {
+  const idusuario = req.params.idusuario;
+  ModeloUsuario.findOne({ idusuario  } && {admin: true})
+    .then((usuario) => {
+      res.json(usuario);
+    })
+    .catch((error) => {
+      res.status(500).send('Error al obtener el administrador');
+    });
+}
+);
+
 //ruta para saber si el correo ya esta registrado
 router.post('/correo', (req, res) => {
   const email = req.body.email;

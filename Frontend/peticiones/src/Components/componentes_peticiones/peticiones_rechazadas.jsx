@@ -86,7 +86,7 @@ function Peticiones_rechazadas() {
     };
     useEffect(() => {
       if (idusuario) {
-        axios.get(`/api/peticiones/obtener_solicitudes_canceladas`).then(res => {
+        axios.get(`/api/peticiones/obtener_solicitudes_canceladas/${idusuario}`).then(res => {
       
           setPeticiones(res.data);
         }).catch(err => console.log(err));

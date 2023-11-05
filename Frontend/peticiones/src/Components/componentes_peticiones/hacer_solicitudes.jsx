@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHandPointLeft } from '@fortawesome/free-solid-svg-icons'
 import { faHandPointRight } from '@fortawesome/free-solid-svg-icons'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { faCircleChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -171,7 +172,7 @@ function Hacer_solicitud() {
         if (nombre.includes('@')) {
           campos.add('El nombre no debe contener el carácter @');
         }
-        if (!/^[A-Za-z]+$/.test(nombre)) {
+        if (!/^[A-Za-z\s]+$/.test(nombre)) {
           campos.add('El nombre solo debe contener letras');
         }
       }
@@ -254,6 +255,22 @@ function Hacer_solicitud() {
           .then(res => {
             console.log('peticion enviada');
             setEnviado(true);
+            Swal.fire({
+              icon: 'success',
+              title: 'Petición enviada',
+              text: 'Se ha enviado la petición correctamente. Pronto recibirá una respuesta.',
+              showCancelButton: true,
+              confirmButtonText: 'Hacer otra solicitud',
+              cancelButtonText: 'Volver al inicio'
+            }).then((result) => {
+              if (result.isConfirmed) {
+       
+                window.location.reload();
+               } else if (result.dismiss === Swal.DismissReason.cancel) {
+          
+                navigate('/inicio');
+              }
+            });
           })
           .catch(err => {
             console.log(err);
@@ -279,6 +296,18 @@ function Hacer_solicitud() {
     }, [enviado]);
     return (
       <div className="fondo">
+        
+        <button
+  className="text-4xl"
+  onClick={() => navigate('/inicio')}
+  style={{
+    position: 'absolute',
+    top: '30px',
+    left: '40px',
+  }}
+>
+<FontAwesomeIcon icon={faCircleChevronLeft} style={{color: "#000000",}} />
+</button>
           <h1 className="gugi text-stone-950 pt-2 pb-10 text-3xl -mt-40" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             Solicitar ayuda
           </h1>

@@ -84,9 +84,50 @@ router.post('/mandar-peticion', upload.single('imagen'), (req, res) => {
       }); 
   });
 
-  router.get('/obtener_peticiones/:idusuario', (req, res) => {
+ 
+  router.get('/obtener_historial_falsas/:idusuario', (req, res) => {
     const idusuario = req.params.idusuario;
-    peticiones.find({ idusuario }) 
+    peticiones.find({ idusuario } && { estado: "Falso" }) 
+      .then((usuario) => {
+        res.send(usuario);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  });
+  router.get('/obtener_historial_pendiente/:idusuario', (req, res) => {
+    const idusuario = req.params.idusuario;
+    peticiones.find({ idusuario } && { estado: "Pendiente" }) 
+      .then((usuario) => {
+        res.send(usuario);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  });
+  router.get('/obtener_historial_aceptado/:idusuario', (req, res) => {
+    const idusuario = req.params.idusuario;
+    peticiones.find({ idusuario } && { estado: "Aceptado" }) 
+      .then((usuario) => {
+        res.send(usuario);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  });
+  router.get('/obtener_historial_en_proceso/:idusuario', (req, res) => {
+    const idusuario = req.params.idusuario;
+    peticiones.find({ idusuario } && { estado: "En proceso" }) 
+      .then((usuario) => {
+        res.send(usuario);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  });
+  router.get('/obtener_historial_cancelado/:idusuario', (req, res) => {
+    const idusuario = req.params.idusuario;
+    peticiones.find({ idusuario } && { estado: "Cancelado" }) 
       .then((usuario) => {
         res.send(usuario);
       })
@@ -95,11 +136,13 @@ router.post('/mandar-peticion', upload.single('imagen'), (req, res) => {
       });
   });
 
-  router.get('/obtener_solicitudes', (req, res) => {
-   
-    peticiones.find({ estado: "Pendiente" }) 
-      .then((usuario) => {
-        res.send(usuario);
+
+  
+  router.get('/obtener_solicitudes/:idusuario', (req, res) => {
+    const idusuario = req.params.idusuario;
+    peticiones.find({ $and: [{ idencargado: idusuario }, { estado: "Pendiente" }] })
+      .then((solicitudes) => {
+        res.send(solicitudes);
       })
       .catch((err) => {
         res.send(err);
@@ -142,9 +185,9 @@ router.post('/aceptar_peticion/:idpeticion', (req, res) => {
 });
 
 
-router.get('/obtener_solicitudes_aceptadas', (req, res) => {
-   
-  peticiones.find({estado: "Aceptado"}) 
+router.get('/obtener_solicitudes_aceptadas/:idusuario', (req, res) => {
+  const idusuario = req.params.idusuario;
+  peticiones.find({ $and: [{ idencargado: idusuario }, { estado: "Aceptado" }] })
     .then((usuario) => {
       res.send(usuario);
     })
@@ -175,9 +218,9 @@ router.post('/actualizar_estado_en_proceso/:idpeticion', (req, res) => {
     });
 });
 //obtener solicitudes en proceso
-router.get('/obtener_solicitudes_en_proceso', (req, res) => {
-   
-  peticiones.find({ estado: "En proceso" }) 
+router.get('/obtener_solicitudes_en_proceso/:idusuario', (req, res) => {
+  const idusuario = req.params.idusuario;
+  peticiones.find({ $and: [{ idencargado: idusuario }, { estado: "En proceso" }] })
     .then((usuario) => {
       res.send(usuario);
     })
@@ -207,10 +250,12 @@ router.post('/actualizar_estado_cancelado/:idpeticion', (req, res) => {
     });
 }
 );
+
+
 //obtener solicitudes canceladas
-router.get('/obtener_solicitudes_canceladas', (req, res) => {
-   
-  peticiones.find({ estado: "Cancelado" }) 
+router.get('/obtener_solicitudes_canceladas/:idusuario', (req, res) => {
+  const idusuario = req.params.idusuario;
+  peticiones.find({ $and: [{ idencargado: idusuario }, { estado: "Cancelado" }] })
     .then((usuario) => {
       res.send(usuario);
     })
@@ -242,8 +287,10 @@ router.post('/actualizar_estado_false/:idpeticion', (req, res) => {
 }
 );
 //obtener solicitudes falsas
-router.get('/obtener_solicitudes_falsas', (req, res) => {
-  peticiones.find({ estado: "Falso" }) 
+router.get('/obtener_solicitudes_falsas/:idusuario', (req, res) => {
+  const idusuario = req.params.idusuario;
+
+  peticiones.find({ $and: [{ idencargado: idusuario }, { estado: "Falso" }] })
     .then((usuario) => {
       res.send(usuario);
     })

@@ -88,7 +88,7 @@ export default function Peticiones_proceso() {
   };
   useEffect(() => {
     if (idusuario) {
-      axios.get(`/api/peticiones/obtener_solicitudes_en_proceso`).then(res => {
+      axios.get(`/api/peticiones/obtener_solicitudes_en_proceso/${idusuario}`).then(res => {
     
         setPeticiones(res.data);
       }).catch(err => console.log(err));

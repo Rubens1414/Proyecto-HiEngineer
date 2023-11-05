@@ -93,16 +93,17 @@ function Ver_solicitudes() {
   };
   useEffect(() => {
     if (idusuario) {
-      axios.get(`/api/peticiones/obtener_solicitudes`).then(res => {
-    
+      axios.get(`/api/peticiones/obtener_solicitudes/${idusuario}`).then(res => {
+        console.log(idusuario)
         setPeticiones(res.data);
+        console.log(datapeticiones)
       }).catch(err => console.log(err));
     }
   }, [idusuario]);
-  const lista_peticiones = datapeticiones.map((usuario) => {
+  const lista_peticiones = datapeticiones.map((usuario, i) => {
     return (
-      <div key={usuario.id}>
-        <Peticiones_individual_pendientes peticiones={usuario} />
+      <div key={i} >
+        <Peticiones_individual_pendientes  peticiones={usuario}  />
       </div>
     );
   });
