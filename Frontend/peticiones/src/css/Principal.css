@@ -59,7 +59,7 @@
     left: 0;
 }
 .dropdown-container {
-   @apply mt-96 ml-16;
+   @apply mt-44 ml-16;
     position: absolute;
     z-index: 1;
   }
@@ -69,8 +69,20 @@
     
     z-index: 1;
   }
+  .dropdown-user-noti{
+    @apply -mt-5 mr-24 -ml-48 ;
+    position: absolute;
+    
+    z-index: 1;
+  }
   .dropdown-menu-user {
-    @apply bg-white shadow-lg rounded-lg px-32 py-5 shadow-yellow-500/50  border-yellow-500  ;
+    @apply bg-white shadow-lg rounded-lg px-36  py-5 shadow-yellow-500/50  border-yellow-500  ;
+    position: relative;
+ 
+
+  }
+  .dropdown-menu-noti {
+    @apply bg-white shadow-lg rounded-lg px-2 py-5 shadow-yellow-500/50  border-yellow-500  ;
     position: relative;
  
 

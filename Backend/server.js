@@ -7,6 +7,12 @@ const bodyParser = require('body-parser');
 //importar conexion mongoDB
 const archivoBD=require('./conexion');
 
+//importacion del archivo rutas y modelo notificaciones
+const rutaNotificaciones=require('./rutas/notificaciones');
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use('/api/notificaciones',rutaNotificaciones);
+
 //Importacion del archivo rutas y modelo usuario
 const rutausuario=require('./rutas/usuario');
 app.use(bodyParser.urlencoded({extended:true}));

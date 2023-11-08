@@ -15,6 +15,8 @@ export default function Inicio_sesion({setIsLoggedIn}) {
   const campos = []
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const [showModal, setShowModal] = useState(false);
+  const Swal = require('sweetalert2');
+
   function iniciarSesion(){
      var iniciarSesion = {
         email: email,
@@ -96,7 +98,18 @@ export default function Inicio_sesion({setIsLoggedIn}) {
     
     }
   }, []);
-
+  if (showModal) {
+    Swal.fire({
+      icon: "error",
+      title: "Error al iniciar sesión",
+      text: "Correo o contraseña incorrectos",
+      showConfirmButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setShowModal(false); 
+      }
+    });
+  }
   return (
     
     <div className='fondo'>
@@ -151,28 +164,7 @@ export default function Inicio_sesion({setIsLoggedIn}) {
             Iniciar sesión
           </button>
         </div>
-        {showModal==true && (
-          
-          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none rounded-lg">
-            <div className="rounded-lg border-2 border-black shadow-2xl shadow-cyan-500/50 sm:w-1/2 md:w-1/3 lg:w-1/3 xl:w-1/2 2xl:w-1/3 max-h-screen bg-slate-700	 flex flex-col overflow-y-auto">
-            <h1 className="gugi  text-orange-600 pt-10  text-3xl sm:text-4xl md:text-5xl lg:text-3xl xl:text-3xl 2xl:text-8xl" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    Error al Iniciar sesion: 
-                  </h1>
-            <h1 className="gugi text-white pt-10 pb-10 text-3xl sm:text-4xl md:text-5xl lg:text-3xl xl:text-3xl 2xl:text-8xl" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    Email o contraseña incorrectos
-                  </h1>
-              <div className="sm:text-2xl md:text-2xl lg:text-2xl xl:text-2xl 2xl:text-2xl" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <button
-                  type="button"
-                  className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 mb-4"
-                  onClick={() => setShowModal(false)}
-                >
-                  Ok
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        
       </form>
       <div className="espacio_boton_registro"style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <a

@@ -78,6 +78,9 @@ function Peticiones_ind_a({peticiones}) {
           const descripcion = result.value.descripcion;
           //enviar a la base de datos
           const id=peticiones.idpeticion
+          axios.post(`/api/notificaciones/enviar-notificacion/${peticiones.idusuario}/${id}`, {
+            mensaje: descripcion, 
+          })
           axios.post(`/api/peticiones/actualizar_estado_en_proceso/${id}`, { descripcion: descripcion })
           .then(res => {
             if (res.data === 'Estado actualizado') {
@@ -118,6 +121,9 @@ function Peticiones_ind_a({peticiones}) {
           const descripcion = result.value.descripcion;
           //enviar a la base de datos
           const id=peticiones.idpeticion
+          axios.post(`/api/notificaciones/enviar-notificacion/${peticiones.idusuario}/${id}`, {
+            mensaje: descripcion, 
+          })
           axios.post(`/api/peticiones/aceptar_peticion/${id}`, { descripcion: descripcion })
           .then(res => {
             if (res.data === 'Estado actualizado') {
@@ -158,6 +164,9 @@ function Peticiones_ind_a({peticiones}) {
           const descripcion = result.value.descripcion;
           //enviar a la base de datos
           const id=peticiones.idpeticion
+          axios.post(`/api/notificaciones/enviar-notificacion/${peticiones.idusuario}/${id}`, {
+            mensaje: descripcion, 
+          })
           axios.post(`/api/peticiones/actualizar_estado_cancelado/${id}`, { descripcion: descripcion })
           .then(res => {
             if (res.data === 'Estado actualizado') {
@@ -198,6 +207,9 @@ function Peticiones_ind_a({peticiones}) {
           const descripcion = result.value.descripcion;
           //enviar a la base de datos
           const id=peticiones.idpeticion
+          axios.post(`/api/notificaciones/enviar-notificacion/${peticiones.idusuario}/${id}`, {
+            mensaje: descripcion, 
+          })
           axios.post(`/api/peticiones/actualizar_estado_false/${id}`, { descripcion: descripcion })
           .then(res => {
             if (res.data === 'Estado actualizado') {

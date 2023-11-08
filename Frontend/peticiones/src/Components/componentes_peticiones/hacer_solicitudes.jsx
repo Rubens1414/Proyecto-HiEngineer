@@ -81,6 +81,7 @@ function Hacer_solicitud() {
     const [imagen, setImagen] = useState(null)
     const [descripcion, setDescripcion] = useState('')
     const [idusuario, setIdusuario] = useState('')
+
     const [showModal, setShowModal] = useState(false);
     const [selectedOption, setSelectedOption] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -153,6 +154,7 @@ function Hacer_solicitud() {
     function mandarpeticion() {
     
       const campos = new Set();
+      const idpeticion=shortid.generate();
       console.log(campos);
       if (problema.length === 0) {
         campos.add('El problema no está seleccionado');
@@ -227,7 +229,7 @@ function Hacer_solicitud() {
         imagen: imagen,
         descripcion: descripcion,
         idusuario:idusuario,
-        idpeticion:shortid.generate(),
+        idpeticion:idpeticion,
         idencargado:idUsuarioSeleccionado
 
       } 
@@ -254,7 +256,12 @@ function Hacer_solicitud() {
         })
           .then(res => {
             console.log('peticion enviada');
+
             setEnviado(true);
+            axios.post(`/api/notificaciones/enviar-notificacion/${idUsuarioSeleccionado}/${idpeticion}`, {
+              mensaje: descripcion, 
+            })
+            
             Swal.fire({
               icon: 'success',
               title: 'Petición enviada',
@@ -264,7 +271,7 @@ function Hacer_solicitud() {
               cancelButtonText: 'Volver al inicio'
             }).then((result) => {
               if (result.isConfirmed) {
-       
+                
                 window.location.reload();
                } else if (result.dismiss === Swal.DismissReason.cancel) {
           

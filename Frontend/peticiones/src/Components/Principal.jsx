@@ -3,6 +3,9 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import '../css/Principal.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Notificaciones from './notificaciones_ind';
+import Notificaciones_admin from './notificaciones_ind_admin';
 
 
 //icons
@@ -12,13 +15,17 @@ import {BsCaretDownSquareFill} from 'react-icons/bs';
 import {BsCaretUpSquareFill} from 'react-icons/bs'
 import {FaUserCircle} from 'react-icons/fa'
 import {GoSignOut} from 'react-icons/go'
+import {faBell} from '@fortawesome/free-solid-svg-icons'
+import {faHourglass} from '@fortawesome/free-solid-svg-icons'
 function Principal() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [cambioFondo, setCambioFondo] = useState('fondo_iniciar');
   const [isOpen, setIsOpen] = useState(false);
+  const [notiOpen, setnotiOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
-
+  const [idusuario, setIdusuario] = useState('')
+  const [datanoti, setdatanoti] = useState([])
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -32,6 +39,7 @@ function Principal() {
         .then(response => {
           console.log(response.data.message); 
           console.log(response.data.userId);
+          setIdusuario(response.data.userId);
 
           setIsLoggedIn(true);
           response.data.admin ? setIsAdmin(true) : setIsAdmin(false);
@@ -46,6 +54,17 @@ function Principal() {
       setIsLoggedIn(false);
     }
   }, []);
+
+  //obtener notificaciones
+  useEffect(() => {
+    if (idusuario) {
+      axios.get(`/api/notificaciones/obtener-notificaciones/${idusuario}`).then(res => {
+    
+        setdatanoti(res.data);
+      }).catch(err => console.log(err));
+    }
+  }, [idusuario]);
+  //useEffect para usuario
   useEffect(() => {
     function handleClickOutside(event) {
       const container = document.querySelector('.dropdown-container');
@@ -67,6 +86,29 @@ function Principal() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, userOpen]);
+  //useEffect para notificaciones
+  useEffect(() => {
+    function handleClickOutside(event) {
+      const container = document.querySelector('.dropdown-container');
+      const button = document.querySelector('.icon_desplazar');
+      const container2 = document.querySelector('.dropdown-user-noti');
+      const button2 = document.querySelector('.icon_desplazar');
+
+      if (isOpen && !container.contains(event.target) && event.target !== button) {
+        setIsOpen(false);
+      }
+      if (notiOpen && !container2.contains(event.target) && event.target !== button2) {
+        setnotiOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, notiOpen]);
+
   
   
   const handleLogout = () => {
@@ -145,12 +187,24 @@ function Principal() {
                      </a>
                     
                <div >
-                <button className='m-8'onClick={() => setUserOpen(!userOpen)} ><FaUserCircle className='icon_desplazar_admin'/></button>
+               <button className='my-8 mx-2'onClick={() => setnotiOpen(!notiOpen)} ><FontAwesomeIcon icon={faBell} className='icon_desplazar_admin' /></button>
+                <button className='my-8'onClick={() => setUserOpen(!userOpen)} ><FaUserCircle className='icon_desplazar_admin'/></button>
                
                {userOpen && (
                   <div className="dropdown-user">
                     <div className="dropdown-menu-user">
                          <button className='boton_cerrar'  onClick={handleLogout}><GoSignOut/> </button>
+                    </div>
+                  </div>
+                )}
+                  {notiOpen && (
+                  <div className="dropdown-user-noti" >
+                    <div className="dropdown-menu-noti">
+                    {datanoti.map((usuario, index) => (
+                      <div key={index}>
+                        <Notificaciones_admin notificacion={usuario}  />
+                      </div>
+                    ))}
                     </div>
                   </div>
                 )}
@@ -195,12 +249,43 @@ function Principal() {
              </div>
            
                <div >
-                <button className='m-8'onClick={() => setUserOpen(!userOpen)} ><FaUserCircle className='icon_desplazar'/></button>
-               
+                <button className='my-8 mx-2'onClick={() => setnotiOpen(!notiOpen)} ><FontAwesomeIcon icon={faBell} className='icon_desplazar' /></button>
+                <button className='my-8'onClick={() => setUserOpen(!userOpen)} ><FaUserCircle className='icon_desplazar'/></button>
                {userOpen && (
                   <div className="dropdown-user">
                     <div className="dropdown-menu-user">
                          <button className='boton_cerrar'  onClick={handleLogout}><GoSignOut/> </button>
+                    </div>
+                  </div>
+                )}
+                {notiOpen && (
+                  <div className="dropdown-user-noti" >
+                    <div className="dropdown-menu-noti">
+                    {datanoti.map((usuario, index) => (
+                 
+                        <div key={index}>
+                        <Notificaciones notificacion={usuario}  />
+                      </div>
+                      
+
+                     
+                      
+                      
+                    ))}
+
+                    {datanoti.length==0 &&(
+                      <div className="text-center">
+     
+                      <div className="mt-4">
+                        <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-xl mx-auto">
+                         <FontAwesomeIcon icon={faHourglass} style={{color: "#fae500",}} />
+                          <h2 className="text-xl font-semibold mb-2"> No hay notificaciones</h2>
+                         
+                        </div>
+                      </div>
+                    </div>
+                    )}
+                  
                     </div>
                   </div>
                 )}

@@ -53,6 +53,8 @@ function Peticiones_aceptadas() {
   
       } 
     }, []);
+   
+
     useEffect(() => {
   
       function handleClickOutside(event) {
