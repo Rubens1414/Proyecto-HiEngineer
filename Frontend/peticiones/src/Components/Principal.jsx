@@ -67,15 +67,19 @@ function Principal() {
   //useEffect para usuario
   useEffect(() => {
     function handleClickOutside(event) {
-      const container = document.querySelector('.dropdown-container');
+      const container = document.querySelector('.dropdown-container_ad');
+      const container3 = document.querySelector('.dropdown-container');
       const button = document.querySelector('.icon_desplazar');
       const container2 = document.querySelector('.dropdown-user');
       const button2 = document.querySelector('.icon_desplazar');
   
-      if (isOpen && !container.contains(event.target) && event.target !== button) {
+      if (container && isOpen && !container.contains(event.target) && event.target !== button) {
         setIsOpen(false);
       }
-      if (userOpen && !container2.contains(event.target) && event.target !== button2) {
+      if (container3 && isOpen && !container3.contains(event.target) && event.target !== button) {
+        setIsOpen(false);
+      }
+      if (container2 && userOpen && !container2.contains(event.target) && event.target !== button2) {
         setUserOpen(false);
       }
     }
@@ -86,10 +90,13 @@ function Principal() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, userOpen]);
+  
   //useEffect para notificaciones
   useEffect(() => {
     function handleClickOutside(event) {
-      const container = document.querySelector('.dropdown-container');
+      const container = document.querySelector('.dropdown-container_ad');
+    
+
       const button = document.querySelector('.icon_desplazar');
       const container2 = document.querySelector('.dropdown-user-noti');
       const button2 = document.querySelector('.icon_desplazar');
@@ -97,6 +104,7 @@ function Principal() {
       if (isOpen && !container.contains(event.target) && event.target !== button) {
         setIsOpen(false);
       }
+    
       if (notiOpen && !container2.contains(event.target) && event.target !== button2) {
         setnotiOpen(false);
       }
@@ -167,7 +175,7 @@ function Principal() {
                     )}
                  </button>
                  {isOpen && (
-                  <div className=" esconder dropdown-container">
+                  <div className=" esconder dropdown-container_ad">
                     <ul className="dropdown-menu">
       
                       <li className='opciones_drop_solicitudes_pend'><a href='/ver_solicitudes'>Solicitudes Pendientes</a></li>
@@ -204,11 +212,25 @@ function Principal() {
                       <div key={index}>
                         <Notificaciones_admin notificacion={usuario}  />
                       </div>
+                  
                     ))}
+                      {datanoti.length==0 &&(
+                      <div className="text-center">
+     
+                      <div className="mt-4">
+                        <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-xl mx-auto">
+                         <FontAwesomeIcon icon={faHourglass} style={{color: "#ec2222",}} />
+                          <h2 className="text-xl font-semibold mb-2"> No hay notificaciones</h2>
+                         
+                        </div>
+                      </div>
+                    </div>
+                    )}
+                  
                     </div>
                   </div>
                 )}
-              
+             
                </div>
                 </div>
             </nav>

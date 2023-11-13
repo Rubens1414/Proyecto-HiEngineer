@@ -63,6 +63,11 @@
     position: absolute;
     z-index: 1;
   }
+  .dropdown-container_ad {
+    @apply mt-96 ml-16;
+     position: absolute;
+     z-index: 1;
+   }
   .dropdown-user{
     @apply -mt-5 mr-48 -ml-40 ;
     position: absolute;

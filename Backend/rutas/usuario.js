@@ -2,23 +2,23 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const eschema=mongoose.Schema;
+const eschema = mongoose.Schema;
 
-const eschemausuario=new eschema({
-    nombre:String,
-    apellido:String,
-    email:String,
-    telefono:Number,
-    cedula:Number,
-    password:String,
-    idusuario:String,
-    tokenAutenticacion: String,
-    admin: { type: Boolean, default: false },
-    cargo: String,
+const eschemausuario = new eschema({
+  nombre: String,
+  apellido: String,
+  email: String,
+  telefono: Number,
+  cedula: Number,
+  password: String,
+  idusuario: String,
+  tokenAutenticacion: String,
+  admin: { type: Boolean, default: false },
+  cargo: String,
 });
 
-const ModeloUsuario=mongoose.model('usuarios',eschemausuario);
-module.exports=router;
+const ModeloUsuario = mongoose.model('usuarios', eschemausuario);
+module.exports = router;
 
 //prueba de conexion
 router.get('/', (req, res) => {

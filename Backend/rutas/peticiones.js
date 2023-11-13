@@ -1,57 +1,50 @@
 
-// Dependencias
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const multer = require('multer');
-const eschema=mongoose.Schema;
+const eschema = mongoose.Schema;
 const path = require('path');
-const storage = multer.diskStorage({
-    destination: 'images/',
-    filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
-  });
+
+const storage = multer.memoryStorage(); // Cambiar el almacenamiento a memoria para Cosmos DB
 const upload = multer({ storage });
-//create schema with Time=Date.now()
-const eschemapeticiones=new eschema({
-    nombre:String,
-    apellido:String,
-    problema:[String],
-    lugar:String,
-    imagen:String,
-    descripcion:String,
-    idusuario:String,
-    idpeticion:String,
-    idencargado:String,
-    estado:{type:String,default:"Pendiente"},
-    descripcion_admin:String,
- 
 
-    fecha: {
-      type: String,
-      default: () => {
-          const fechaActual = new Date();
-          const fechaFormateada = ("0" + fechaActual.getDate()).slice(-2) + "/" +
-              ("0" + (fechaActual.getMonth() + 1)).slice(-2) + "/" +
-              fechaActual.getFullYear().toString().slice(-2);
-          return fechaFormateada;
-      }
-     },
-     hora: {
-      type: String,
-      default: () => {
-          const fechaActual = new Date();
-          const horaFormateada = ("0" + fechaActual.getHours()).slice(-2) + ":" +
-              ("0" + fechaActual.getMinutes()).slice(-2);
-          return horaFormateada;
-      }
-    } 
+const eschemapeticiones = new eschema({
+  nombre: String,
+  apellido: String,
+  problema: [String],
+  lugar: String,
+  imagen: Buffer, // Cambiar a tipo Buffer para almacenar imágenes en Cosmos DB
+  descripcion: String,
+  idusuario: String,
+  idpeticion: String,
+  idencargado: String,
+  estado: { type: String, default: "Pendiente" },
+  descripcion_admin: String,
 
+  fecha: {
+    type: String,
+    default: () => {
+      const fechaActual = new Date();
+      const fechaFormateada = ("0" + fechaActual.getDate()).slice(-2) + "/" +
+        ("0" + (fechaActual.getMonth() + 1)).slice(-2) + "/" +
+        fechaActual.getFullYear().toString().slice(-2);
+      return fechaFormateada;
+    }
+  },
+  hora: {
+    type: String,
+    default: () => {
+      const fechaActual = new Date();
+      const horaFormateada = ("0" + fechaActual.getHours()).slice(-2) + ":" +
+        ("0" + fechaActual.getMinutes()).slice(-2);
+      return horaFormateada;
+    }
+  }
 });
 
-const peticiones=mongoose.model('peticiones',eschemapeticiones);
-module.exports=router;
+const peticiones = mongoose.model('peticiones', eschemapeticiones);
+module.exports = router;
 
 //guardar peticiones
 router.post('/mandar-peticion', upload.single('imagen'), (req, res) => {
@@ -299,5 +292,25 @@ router.get('/obtener_solicitudes_falsas/:idusuario', (req, res) => {
     });
 }
 );
+
+
+//Eliminar peticiones por id
+
+router.post('/eliminar_peticion/:idpeticion', (req, res) => {
+  const idPeticion = req.params.idpeticion;
+
+  peticiones.findOneAndDelete({ idpeticion: idPeticion })
+    .then((deletedPeticion) => {
+      if (deletedPeticion) {
+        res.send('Peticion eliminada');
+      } else {
+        res.status(404).send('Peticion no encontrada');
+      }
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+});
+
 
 

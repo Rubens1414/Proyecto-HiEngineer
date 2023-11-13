@@ -43,15 +43,11 @@ function Notificaciones_ind({notificacion}) {
         <div className="text-center">
         <div className="mt-4">
           <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-xl mx-auto">
-            {isAdmin ? (
-              <h2 className="text-xl font-semibold mb-2">
-                <FontAwesomeIcon icon={faStopwatch} shake style={{ color: "#ec2222" }} /> Nueva solicitud: {notificacion.idpeticion}
-              </h2>
-            ) : (
+        
               <h2 className="text-xl font-semibold mb-2">
                 <FontAwesomeIcon icon={faListCheck} style={{ color: "#ff0000" }} /> Actualizacion de Solicitud: {notificacion.idpeticion}
               </h2>
-            )}
+            
             <p className="text-sm">{notificacion.mensaje}</p>
           </div>
         </div>

@@ -20,6 +20,8 @@ import { faClone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHand} from '@fortawesome/free-solid-svg-icons'
 
+import { faFile } from "@fortawesome/free-solid-svg-icons";
+
 function Historial_solicitudes() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [idusuario, setIdusuario] = useState('')
@@ -32,8 +34,6 @@ function Historial_solicitudes() {
     const [userOpen, setUserOpen] = useState(false);
 
     const navigate = useNavigate();
-    //useEffect para mandar buscar las peticiones del usuario
-    const [datapeticiones, setPeticiones] = useState([])
 
     const [datahistorialp, setHistorialp] = useState([])
     const [datahistorialc, setHistorialc] = useState([])
@@ -278,7 +278,46 @@ function Historial_solicitudes() {
        </div>
       
        <div className='contenedor_lista_peticiones'style={{ flexWrap: 'wrap' }}  >
-       
+      
+       {datahistorialp.length === 0 && mostrar_pendiente &&  (
+              <div className='flex flex-col' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+             <FontAwesomeIcon icon={faFile} bounce className="text-blue-500 text-8xl mt-40" />
+          
+             <h3 className=' font-thin mt-2'>No tiene solicitudes pendientes todavia </h3>
+              </div>
+       )}
+
+        {datahistorialpr.length === 0 && mostrar_proceso &&  (
+            <div className='flex flex-col' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <FontAwesomeIcon icon={faFile} bounce className="text-orange-500 text-8xl mt-40" />
+
+            <h3 className=' font-thin mt-2'>No tiene solicitudes en proceso todavia </h3>
+              </div>
+          )}
+
+        {datahistorialc.length === 0 && mostrar_cancelado &&  (
+          <div className='flex flex-col' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <FontAwesomeIcon icon={faFile} bounce className="text-red-500 text-8xl mt-40" />
+
+          <h3 className=' font-thin mt-2'>No tiene solicitudes canceladas todavia </h3>
+            </div>
+          )}
+        {datahistorialf.length === 0 && mostrar_falsa &&  (
+          <div className='flex flex-col' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <FontAwesomeIcon icon={faFile} bounce className="text-gray-500 text-8xl mt-40" />
+
+          <h3 className=' font-thin mt-2'>No tiene solicitudes falsas todavia </h3>
+            </div>
+          )}
+        {datahistoriala.length === 0 && mostrar_aprobado &&  (
+          <div className='flex flex-col' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <FontAwesomeIcon icon={faFile} bounce className="text-gray-500 text-8xl mt-40" />
+
+          <h3 className=' font-thin mt-2'>No tiene solicitudes aprobadas todavia </h3>
+            </div>
+          )}
+
+
         {mostrar_pendiente && (
           
             lista_solicitudes_pendiente

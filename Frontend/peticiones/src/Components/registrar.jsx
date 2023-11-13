@@ -6,13 +6,11 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../css/registrar.css'
 
-//icons
 import {AiOutlineRollback} from 'react-icons/ai'
 
 
 
 function Registrar() {
-  //hooks
   const [nombre, setNombre] = useState('')
   const [apellido, setApellido] = useState('')
   const [cedula, setCedula] = useState('')
@@ -70,8 +68,7 @@ function Registrar() {
         
         })
         .catch(error => {
-          console.log('Acceso no autorizado'); // El token no es válido o el usuario no está autenticado
-        
+          console.log('Acceso no autorizado'); 
         });
        
 
@@ -149,9 +146,7 @@ function agregarUsuario(){
     if (nombre === '') {
       campos.push('nombre');
     } else {
-      // Validar cantidad de caracteres y caracteres especiales en nombre
       if (nombre.length < 3  || nombre.includes('@') || /[^\w\s]/.test(nombre) || !/^[A-Za-z]+$/.test(nombre)) {
-        // Agregar mensaje de error específico para el nombre
         campos.push('nombre (invalido)');
      
       }else {
@@ -164,9 +159,7 @@ function agregarUsuario(){
     if (apellido === '') {
       campos.push('apellido');
     } else {
-      // Validar cantidad de caracteres y caracteres especiales en apellido y solo letras
       if (apellido.length < 3 || apellido.includes('@') || /[^\w\s]/.test(apellido) || !/^[A-Za-z]+$/.test(apellido)  ) {
-        // Agregar mensaje de error específico para el apellido
         campos.push('apellido (invalido)');
       }else {
         campos_valido.push('apellido valido');
@@ -176,9 +169,7 @@ function agregarUsuario(){
     if (cedula === '') {
       campos.push('cedula');
     } else {
-      // Validar longitud de cédula
       if (cedula.length > 10 || cedula.length < 8 ) {
-        // Agregar mensaje de error específico para la cédula
         campos.push('cedula (invalida)');
       }else {
         campos_valido.push('cedula (valida)');
@@ -188,9 +179,7 @@ function agregarUsuario(){
     if (telefono === '') {
       campos.push('telefono');
     } else {
-      // Validar longitud de teléfono
       if (telefono.length !== 10) {
-        // Agregar mensaje de error específico para el teléfono
         campos.push('telefono (invalido)');
       }else{
         campos_valido.push('telefono (valido)');
@@ -241,7 +230,7 @@ function agregarUsuario(){
     if (campos.length > 0 ) {
       return
     }
-    //conexion con usuario.js
+
     axios.post('/api/usuario/correo', usuario)
     .then(res => {
       if (res.data === 'correo no registrado') {

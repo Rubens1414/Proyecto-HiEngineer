@@ -29,8 +29,33 @@ function Peticiones_ind_r({peticiones}) {
     const [isHovered4, setIsHovered4] = useState(false);
     const Swal = require('sweetalert2')
 
-  
-  
+    const [showModal, setShowModal] = useState(false);
+
+    const openModal = () => {
+      setShowModal(true);
+    };
+
+    const closeModal = () => {
+      setShowModal(false);
+    };
+    function Modal({ show, onClose, imageSrc }) {
+      if (!show) return null;
+    
+      return (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="modal-overlay fixed inset-0 bg-black opacity-50"></div>
+          <div className="modal-container bg-white w-1/2 md:w-1/3 mx-auto rounded shadow-lg z-50 overflow-y-auto max-h-screen">
+            <div className="modal-content p-4">
+              <button className="modal-close text-2xl" onClick={onClose}>
+                &times;
+              </button>
+              <img src={imageSrc} alt="Imagen" className="w-full" />
+            </div>
+          </div>
+        </div>
+      );
+    }
+    
     useEffect(() => {
       const token = localStorage.getItem('token');
   
@@ -217,6 +242,39 @@ function Peticiones_ind_r({peticiones}) {
       
     }
    
+    const handleEliminar = () => {
+      Swal.fire({
+        title: '¿Estás seguro de eliminar la solicitud?',
+        text: "No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: 'Cancelar',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          //enviar a la base de datos
+          const id=peticiones.idpeticion
+
+          axios.post(`/api/peticiones/eliminar_peticion/${id}`)
+          .then(res => {
+            if (res.data === 'Peticion eliminada') {
+              Swal.fire({
+                title: 'Peticion eliminada',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+              }).then((result) => {
+                if (result) {
+                  window.location.reload();
+                }
+              });
+            }
+          }
+          )
+          .catch(err => console.log(err));
+
+        }
+      });
+    }
 
     //handle open
     const handleOpen = () => {
@@ -334,11 +392,12 @@ function Peticiones_ind_r({peticiones}) {
                           <h1 className=" text-2xl ml-4">
                           Imagen:{" "}
                           <span className=" text-black">
-                            <button className="boton_ver_imagen"><FontAwesomeIcon icon={faImage} /></button>
+                            <button className="boton_ver_imagen"><FontAwesomeIcon icon={faImage} onClick={openModal}/></button>
                           </span>
                         </h1>
 
                      )}
+                    <Modal show={showModal} onClose={closeModal} imageSrc={imageUrl} />
                       <h1 className="text-2xl ml-4">
                          Descripción:{" "}
                          <span className="text-black max-h-40 overflow-y-auto block">
@@ -362,6 +421,9 @@ function Peticiones_ind_r({peticiones}) {
             
                 <button className="boton_edit_peticion_rechazar" onClick={Aceptar} >
                 <FontAwesomeIcon icon={faPenToSquare} className="text-xl" />
+                </button>
+                <button className="boton_eliminar_peticion" onClick={handleEliminar}>
+                <FontAwesomeIcon icon={faXmark} className="text-xl" />
                 </button>
                  </div>
              </motion.div>
