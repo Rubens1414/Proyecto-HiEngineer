@@ -146,26 +146,22 @@ function agregarUsuario(){
     if (nombre === '') {
       campos.push('nombre');
     } else {
-      if (nombre.length < 3  || nombre.includes('@') || /[^\w\s]/.test(nombre) || !/^[A-Za-z]+$/.test(nombre)) {
+      if (nombre.length < 3 || nombre.includes('@') || !/^[A-Za-záéíóúÁÉÍÓÚüÜñÑ]+$/.test(nombre)) {
         campos.push('nombre (invalido)');
-     
-      }else {
-     
+      } else {
         campos_valido.push('nombre valido');
       }
-
     }
     
     if (apellido === '') {
       campos.push('apellido');
     } else {
-      if (apellido.length < 3 || apellido.includes('@') || /[^\w\s]/.test(apellido) || !/^[A-Za-z]+$/.test(apellido)  ) {
+      if (apellido.length < 3 || apellido.includes('@') || !/^[A-Za-záéíóúÁÉÍÓÚüÜñÑ]+$/.test(apellido)) {
         campos.push('apellido (invalido)');
-      }else {
+      } else {
         campos_valido.push('apellido valido');
       }
     }
-    
     if (cedula === '') {
       campos.push('cedula');
     } else {

@@ -174,11 +174,11 @@ function Hacer_solicitud() {
         if (nombre.includes('@')) {
           campos.add('El nombre no debe contener el carácter @');
         }
-        if (!/^[A-Za-z\s]+$/.test(nombre)) {
-          campos.add('El nombre solo debe contener letras');
+        if (!/^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(nombre)) {
+          campos.add('El nombre solo debe contener letras y espacios');
         }
       }
-
+      
       if (apellido === '') {
         campos.add('El apellido está vacío');
       } else {
@@ -188,7 +188,7 @@ function Hacer_solicitud() {
         if (apellido.includes('@')) {
           campos.add('El apellido no debe contener el carácter @');
         }
-        if (!/^[A-Za-z]+$/.test(apellido)) {
+        if (!/^[A-Za-záéíóúÁÉÍÓÚüÜñÑ]+$/.test(apellido)) {
           campos.add('El apellido solo debe contener letras');
         }
       }

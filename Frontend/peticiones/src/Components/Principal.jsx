@@ -64,7 +64,6 @@ function Principal() {
       }).catch(err => console.log(err));
     }
   }, [idusuario]);
-  //useEffect para usuario
   useEffect(() => {
     function handleClickOutside(event) {
       const container = document.querySelector('.dropdown-container_ad');
@@ -91,32 +90,55 @@ function Principal() {
     };
   }, [isOpen, userOpen]);
   
-  //useEffect para notificaciones
+  useEffect(() => {
+    function handleClickOutside(event) {
+      const container = document.querySelector('.dropdown-container_user');
+      const container3 = document.querySelector('.dropdown-container');
+      const button = document.querySelector('.icon_desplazar');
+      const container2 = document.querySelector('.dropdown-user');
+      const button2 = document.querySelector('.icon_desplazar');
+  
+      if (container && isOpen && !container.contains(event.target) && event.target !== button) {
+        setIsOpen(false);
+      }
+      if (container3 && isOpen && !container3.contains(event.target) && event.target !== button) {
+        setIsOpen(false);
+      }
+      if (container2 && userOpen && !container2.contains(event.target) && event.target !== button2) {
+        setUserOpen(false);
+      }
+    }
+  
+    document.addEventListener('mousedown', handleClickOutside);
+  
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, userOpen]);
+  
+  // useEffect para notificaciones
   useEffect(() => {
     function handleClickOutside(event) {
       const container = document.querySelector('.dropdown-container_ad');
-    
-
       const button = document.querySelector('.icon_desplazar');
       const container2 = document.querySelector('.dropdown-user-noti');
       const button2 = document.querySelector('.icon_desplazar');
-
-      if (isOpen && !container.contains(event.target) && event.target !== button) {
+  
+      if (container && isOpen && !container.contains(event.target) && event.target !== button) {
         setIsOpen(false);
       }
-    
-      if (notiOpen && !container2.contains(event.target) && event.target !== button2) {
+  
+      if (container2 && notiOpen && !container2.contains(event.target) && event.target !== button2) {
         setnotiOpen(false);
       }
     }
-
+  
     document.addEventListener('mousedown', handleClickOutside);
-
+  
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen, notiOpen]);
-
   
   
   const handleLogout = () => {
@@ -244,7 +266,7 @@ function Principal() {
                  <img src={require('../Images/Hi_inge.png')} className="w-20 h-20	" />
                  <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-black esconder_opciones">Hi Engineer</span>
                 
-                 <a href="/Hacer_solicitud" className=" esconder_opciones boton_hacer_solicitud">Hacer una solicitud</a>
+                 <a href="/hacer_solicitud" className=" esconder_opciones boton_hacer_solicitud">Hacer una solicitud</a>
                  <a href="/lista_peticiones" className=" esconder_opciones boton_historial">Historial de peticiones</a>
 
                  <button type='button'  className=" esconder " onClick={() => setIsOpen(!isOpen)}>
@@ -256,12 +278,12 @@ function Principal() {
                     )}
                  </button>
                  {isOpen && (
-                  <div className=" esconder dropdown-container">
+                  <div className=" esconder dropdown-container_user">
                     <ul className="dropdown-menu">
       
-                      <li className='opciones_drop_solicitud'><a href='/peticiones'>Hacer una solicitud</a></li>
+                      <li className='opciones_drop_solicitud'><a href='/hacer_solicitud'>Hacer una solicitud</a></li>
                       <li className='opciones_drop_historial'><a href='/lista_peticiones'>Historial de peticiones</a></li>
-                      
+                     
                     </ul>
                   </div>
                 )}

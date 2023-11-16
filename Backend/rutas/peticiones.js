@@ -3,18 +3,26 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const multer = require('multer');
-const eschema = mongoose.Schema;
+
 const path = require('path');
 
-const storage = multer.memoryStorage(); // Cambiar el almacenamiento a memoria para Cosmos DB
+
+const storage = multer.diskStorage({
+  destination: 'images/',
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
 const upload = multer({ storage });
 
-const eschemapeticiones = new eschema({
+
+
+const eschemapeticiones = new mongoose.Schema({
   nombre: String,
   apellido: String,
   problema: [String],
   lugar: String,
-  imagen: Buffer, // Cambiar a tipo Buffer para almacenar imágenes en Cosmos DB
+  imagen: String, // Cambiar a tipo String para almacenar la ruta de la imagen en local
   descripcion: String,
   idusuario: String,
   idpeticion: String,
@@ -43,51 +51,44 @@ const eschemapeticiones = new eschema({
   }
 });
 
+// Ruta para manejar la subida de imágenes
+router.post('/subir_imagen', upload.single('imagen'), (req, res) => {
+  // Devuelve la ruta de la imagen en local
+  res.json({ imageUrl: path.join('images', req.file.originalname) });
+});
+
 const peticiones = mongoose.model('peticiones', eschemapeticiones);
 module.exports = router;
 
 //guardar peticiones
+//guardar peticiones
 router.post('/mandar-peticion', upload.single('imagen'), (req, res) => {
-    // Guardar petición
-  let imagen = null;
-  if (req.file) {
-    imagen = req.file.filename; // Obtén el nombre del archivo guardado por multer
-  }
+  // Guardar petición
+let imagen = null;
+if (req.file) {
+  imagen = req.file.filename; // Obtén el nombre del archivo guardado por multer
+}
+const nuevapeticion = new peticiones({
+  nombre: req.body.nombre,
+  apellido: req.body.apellido,
+  problema: req.body.problema,
+  lugar: req.body.lugar,
+  imagen: imagen, // Establecer la imagen o null
+  descripcion: req.body.descripcion,
+  descripcion_admin:'No hay descripcion',
+  idusuario: req.body.idusuario,
+  idpeticion: req.body.idpeticion,
+  idencargado:req.body.idencargado,
+});
 
-  const nuevapeticion = new peticiones({
-    nombre: req.body.nombre,
-    apellido: req.body.apellido,
-    problema: req.body.problema,
-    lugar: req.body.lugar,
-    imagen: imagen, // Establecer la imagen o null
-    descripcion: req.body.descripcion,
-    descripcion_admin:'No hay descripcion',
-    idusuario: req.body.idusuario,
-    idpeticion: req.body.idpeticion,
-    idencargado:req.body.idencargado,
-
-  });
-  
-    nuevapeticion.save()
-      .then(() => {
-        res.send("Peticion agregada");
-      })
-      .catch((err) => {
-        res.send(err);
-      }); 
-  });
-
- 
-  router.get('/obtener_historial_falsas/:idusuario', (req, res) => {
-    const idusuario = req.params.idusuario;
-    peticiones.find({ idusuario } && { estado: "Falso" }) 
-      .then((usuario) => {
-        res.send(usuario);
-      })
-      .catch((err) => {
-        res.send(err);
-      });
-  });
+  nuevapeticion.save()
+    .then(() => {
+      res.send("Peticion agregada");
+    })
+    .catch((err) => {
+      res.send(err);
+    }); 
+});
   router.get('/obtener_historial_pendiente/:idusuario', (req, res) => {
     const idusuario = req.params.idusuario;
     peticiones.find({ idusuario } && { estado: "Pendiente" }) 
