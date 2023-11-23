@@ -156,7 +156,7 @@ function agregarUsuario(){
     if (apellido === '') {
       campos.push('apellido');
     } else {
-      if (apellido.length < 3 || apellido.includes('@') || !/^[A-Za-záéíóúÁÉÍÓÚüÜñÑ]+$/.test(apellido)) {
+      if (apellido.length < 3 || apellido.includes('@') || !/^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(apellido)) {
         campos.push('apellido (invalido)');
       } else {
         campos_valido.push('apellido valido');

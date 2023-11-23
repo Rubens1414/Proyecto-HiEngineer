@@ -188,7 +188,7 @@ function Hacer_solicitud() {
         if (apellido.includes('@')) {
           campos.add('El apellido no debe contener el carácter @');
         }
-        if (!/^[A-Za-záéíóúÁÉÍÓÚüÜñÑ]+$/.test(apellido)) {
+        if (!/^[A-Za-záéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(apellido)) {
           campos.add('El apellido solo debe contener letras');
         }
       }
