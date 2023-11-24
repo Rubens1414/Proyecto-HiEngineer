@@ -267,7 +267,7 @@ function Principal() {
                  <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-black esconder_opciones">Hi Engineer</span>
                 
                  <a href="/hacer_solicitud" className=" esconder_opciones boton_hacer_solicitud">Hacer una solicitud</a>
-                 <a href="/lista_peticiones" className=" esconder_opciones boton_historial">Historial de peticiones</a>
+                 <a href="/lista_peticiones" className=" esconder_opciones boton_historial">Historial de Solicitudes</a>
 
                  <button type='button'  className=" esconder " onClick={() => setIsOpen(!isOpen)}>
                     {!isOpen &&(
@@ -282,7 +282,7 @@ function Principal() {
                     <ul className="dropdown-menu">
       
                       <li className='opciones_drop_solicitud'><a href='/hacer_solicitud'>Hacer una solicitud</a></li>
-                      <li className='opciones_drop_historial'><a href='/lista_peticiones'>Historial de peticiones</a></li>
+                      <li className='opciones_drop_historial'><a href='/lista_peticiones'>Historial de Solicitudes</a></li>
                      
                     </ul>
                   </div>

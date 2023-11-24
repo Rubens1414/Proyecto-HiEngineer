@@ -91,7 +91,7 @@ const nuevapeticion = new peticiones({
 });
   router.get('/obtener_historial_pendiente/:idusuario', (req, res) => {
     const idusuario = req.params.idusuario;
-    peticiones.find({ idusuario } && { estado: "Pendiente" }) 
+    peticiones.find({ $and: [{ idusuario: idusuario }, { estado: "Pendiente" }] })
       .then((usuario) => {
         res.send(usuario);
       })
@@ -101,7 +101,7 @@ const nuevapeticion = new peticiones({
   });
   router.get('/obtener_historial_aceptado/:idusuario', (req, res) => {
     const idusuario = req.params.idusuario;
-    peticiones.find({ idusuario } && { estado: "Aceptado" }) 
+    peticiones.find({ $and: [{ idusuario: idusuario }, { estado: "Aceptado" }] }) 
       .then((usuario) => {
         res.send(usuario);
       })
@@ -111,7 +111,7 @@ const nuevapeticion = new peticiones({
   });
   router.get('/obtener_historial_en_proceso/:idusuario', (req, res) => {
     const idusuario = req.params.idusuario;
-    peticiones.find({ idusuario } && { estado: "En proceso" }) 
+    peticiones.find({ $and: [{ idusuario: idusuario }, { estado: "En proceso" }] })
       .then((usuario) => {
         res.send(usuario);
       })
@@ -121,7 +121,7 @@ const nuevapeticion = new peticiones({
   });
   router.get('/obtener_historial_cancelado/:idusuario', (req, res) => {
     const idusuario = req.params.idusuario;
-    peticiones.find({ idusuario } && { estado: "Cancelado" }) 
+    peticiones.find({ $and: [{ idusuario: idusuario }, { estado: "Cancelado" }] })
       .then((usuario) => {
         res.send(usuario);
       })
@@ -129,7 +129,16 @@ const nuevapeticion = new peticiones({
         res.send(err);
       });
   });
-
+  router.get('/obtener_historial_falsas/:idusuario', (req, res) => {
+    const idusuario = req.params.idusuario;
+    peticiones.find({ $and: [{ idusuario: idusuario }, { estado: "Falso" }] })
+      .then((usuario) => {
+        res.send(usuario);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  });
 
   
   router.get('/obtener_solicitudes/:idusuario', (req, res) => {

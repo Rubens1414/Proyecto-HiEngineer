@@ -51,6 +51,7 @@ function Historial_solicitudes() {
           })
             .then(response => {
               console.log(response.data.message); // Acceso autorizado
+              console.log(response.data.userId);
               setIdusuario(response.data.userId);
               setIsLoggedIn(true);
             })
@@ -136,7 +137,7 @@ function Historial_solicitudes() {
       useEffect(() => {
         if (idusuario) {
           axios.get(`/api/peticiones/obtener_historial_pendiente/${idusuario}`).then(res => {
-        
+            console.log(res.data);
             setHistorialp(res.data);
           }).catch(err => console.log(err));
           axios.get(`/api/peticiones/obtener_historial_en_proceso/${idusuario}`).then(res => {
@@ -311,7 +312,7 @@ function Historial_solicitudes() {
           )}
         {datahistoriala.length === 0 && mostrar_aprobado &&  (
           <div className='flex flex-col' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <FontAwesomeIcon icon={faFile} bounce className="text-gray-500 text-8xl mt-40" />
+          <FontAwesomeIcon icon={faFile} bounce className="text-green-500 text-8xl mt-40" />
 
           <h3 className=' font-thin mt-2'>No tiene solicitudes aprobadas todavia </h3>
             </div>
