@@ -113,8 +113,7 @@ Este proyecto fue creado con fines de aprendizaje para explorar las tecnologías
 
 Si tienes alguna pregunta o deseas contribuir, puedes contactarme:
 
-- **Nombre**: Erick Gómez Rosales
-- **Correo**: tu_email@example.com
-- **GitHub**: [tu_usuario](https://github.com/tu_usuario)
+- **Nombre**: Rubens Echeverria
+- **Correo**: MisterRubens14@outlook.com
 
 ---
